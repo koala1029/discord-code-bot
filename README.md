@@ -1,6 +1,11 @@
-# discord-ts-template
+# discord-code-bot
 
- Template to easily start the development of a typescript discord bot.
+Bot that send 1 promo code per valid role.
+
+Type `/codes` to see your codes available.
+
+Update `codes.json` with `roleId` and a list of codes.
+See `users.json` to list all codes given to each users.
 
 ## Usage
 
