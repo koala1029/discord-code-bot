@@ -19,15 +19,15 @@
   },
   "homepage": "https://github.com/HHK-ETH/discord-gnosis-bot#readme",
   "dependencies": {
-    "@discordjs/builders": "^0.15.0",
-    "@discordjs/rest": "^0.5.0",
-    "discord-api-types": "^0.36.2",
-    "discord.js": "^13.2.0",
-    "dotenv": "^10.0.0",
-    "ts-node": "^10.8.2",
-    "typescript": "^4.7.4"
+    "@discordjs/builders": "1.6.5",
+    "@discordjs/rest": "2.0.1",
+    "discord-api-types": "0.36.2",
+    "discord.js": "14.13.0",
+    "dotenv": "16.3.1",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@types/node": "^18.0.3"
+    "@types/node": "20.6.3"
   }
 }

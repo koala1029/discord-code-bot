@@ -8,11 +8,11 @@ if (!token || !clientId) {
   throw Error('Incomplete env file.');
 }
 
-const commands = [new SlashCommandBuilder().setName('ping').setDescription('Reply with pong!')].map((command) =>
-  command.toJSON()
+const commands = [new SlashCommandBuilder().setName('codes').setDescription('Returns promo codes owned by user')].map(
+  (command) => command.toJSON()
 );
 
-const rest = new REST({ version: '9' }).setToken(token);
+const rest = new REST({ version: '10' }).setToken(token);
 
 rest
   .put(Routes.applicationCommands(clientId), { body: commands })

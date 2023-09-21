@@ -2,3 +2,5 @@
 node_modules
 yarn.lock
 build
+src/codes.json
+src/users.json
