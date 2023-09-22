@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, GatewayIntentBits } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, Events, GatewayIntentBits } from 'discord.js';
 import { StorageHelper } from './src';
 dotenv.config();
 
@@ -35,7 +35,7 @@ client.login(process.env.DISCORD_TOKEN).then(
     }
 
     //add commands
-    client.on('interactionCreate', async (interaction): Promise<void> => {
+    client.on(Events.InteractionCreate, async (interaction) => {
       if (!interaction.isButton()) return;
 
       const { customId, guildId, channelId, user, guild } = interaction;
@@ -82,7 +82,8 @@ client.login(process.env.DISCORD_TOKEN).then(
           interaction.editReply({
             content: 'Error while generating the code. Please contact discord admin.',
           });
-          throw Error('No codes available for ' + roleId + '. Please refill codes.');
+          console.log('No codes available for ' + roleId + '. Please refill codes.');
+          return;
         }
 
         //set code, remove from available and add to display
