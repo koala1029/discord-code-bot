@@ -49,6 +49,8 @@ client.login(process.env.DISCORD_TOKEN).then(
         return;
       }
 
+      await interaction.deferReply({ ephemeral: true });
+
       //check if has a role that can receive a code
       const member = await guild!.members.fetch(user);
       let acceptedRoles = member.roles.cache
@@ -59,7 +61,7 @@ client.login(process.env.DISCORD_TOKEN).then(
 
       //in case user was somehow able to send cmd in the channel without having roles needed
       if (acceptedRoles.length === 0) {
-        interaction.reply({ content: "You don't have any code to claim.", ephemeral: true });
+        interaction.editReply({ content: "You don't have any code to claim." });
       }
 
       const usersData = await storageHelper.readUsers();
@@ -81,9 +83,8 @@ client.login(process.env.DISCORD_TOKEN).then(
         }
 
         if (!codes[roleId] || codes[roleId].length === 0) {
-          interaction.reply({
+          interaction.editReply({
             content: 'Error while generating the code. Please contact discord admin.',
-            ephemeral: true,
           });
           throw Error('No codes available for ' + roleId + '. Please refill codes.');
         }
@@ -93,9 +94,8 @@ client.login(process.env.DISCORD_TOKEN).then(
         codesToDisplay.push(usersData[user.id][roleId]);
       }
 
-      interaction.reply({
+      interaction.editReply({
         content: 'Your codes are: ' + codesToDisplay.toString(),
-        ephemeral: true,
       });
 
       //write into storage
