@@ -1,5 +1,13 @@
 import dotenv from 'dotenv';
-import { Client, GatewayIntentBits, GuildMember, TextChannel } from 'discord.js';
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  Client,
+  GatewayIntentBits,
+  GuildMember,
+  TextChannel,
+} from 'discord.js';
 import { StorageHelper } from './src';
 dotenv.config();
 
@@ -9,6 +17,8 @@ if (!process.env.GUILD || !process.env.CHANNEL || !process.env.ROLES)
 
 //set roles
 const ROLES = process.env.ROLES.split(',');
+const GUILD_ID = process.env.GUILD;
+const CHANNEL_ID = process.env.CHANNEL;
 
 //Init storage
 const storageHelper = StorageHelper.getInstance();
@@ -16,13 +26,26 @@ const storageHelper = StorageHelper.getInstance();
 //discord api setup
 client.login(process.env.DISCORD_TOKEN).then(
   async () => {
+    const targetGuild = await client.guilds.fetch(GUILD_ID);
+    const targetChannel = await targetGuild.channels.fetch(CHANNEL_ID);
+    if (!targetChannel || (targetChannel && !targetChannel.isTextBased())) {
+      throw Error('Cannot send button in the channel given.');
+    }
+
+    const button = new ButtonBuilder().setCustomId('codes').setLabel('Get promo codes').setStyle(ButtonStyle.Primary);
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
+    await targetChannel.send({
+      content: 'Click on the button below to receive your promo codes.',
+      components: [row],
+    });
+
     //add commands
     client.on('interactionCreate', async (interaction): Promise<void> => {
-      if (!interaction.isCommand()) return;
+      if (!interaction.isButton()) return;
 
-      const { commandName, guildId, channelId, user, guild } = interaction;
+      const { customId, guildId, channelId, user, guild } = interaction;
 
-      if (guildId !== process.env.GUILD || channelId !== process.env.CHANNEL || commandName !== 'code') {
+      if (guildId !== GUILD_ID || channelId !== CHANNEL_ID || customId !== 'codes') {
         return;
       }
 

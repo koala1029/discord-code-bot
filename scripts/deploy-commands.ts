@@ -15,6 +15,6 @@ const commands = [new SlashCommandBuilder().setName('codes').setDescription('Ret
 const rest = new REST({ version: '10' }).setToken(token);
 
 rest
-  .put(Routes.applicationCommands(clientId), { body: commands })
+  .put(Routes.applicationCommands(clientId), { body: [] }) //no commands
   .then(() => console.log('Successfully registered application commands.'))
   .catch(console.error);
