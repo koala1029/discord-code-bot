@@ -92,7 +92,7 @@ client.login(process.env.DISCORD_TOKEN).then(
       }
 
       interaction.editReply({
-        content: 'Your codes are: ' + codesToDisplay.toString(),
+        content: 'Your codes are: ' + codesToDisplay.toString().replace(',', ', '),
       });
 
       //write into storage
