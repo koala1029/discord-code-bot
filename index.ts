@@ -1,13 +1,5 @@
 import dotenv from 'dotenv';
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  Client,
-  GatewayIntentBits,
-  GuildMember,
-  TextChannel,
-} from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, GatewayIntentBits } from 'discord.js';
 import { StorageHelper } from './src';
 dotenv.config();
 
@@ -34,10 +26,13 @@ client.login(process.env.DISCORD_TOKEN).then(
 
     const button = new ButtonBuilder().setCustomId('codes').setLabel('Get promo codes').setStyle(ButtonStyle.Primary);
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
-    await targetChannel.send({
-      content: 'Click on the button below to receive your promo codes.',
-      components: [row],
-    });
+    const lastMessage = (await targetChannel.messages.fetch()).first();
+    if (!lastMessage || lastMessage.author.id !== client.user!.id) {
+      await targetChannel.send({
+        content: 'Click on the button below to receive your promo codes.',
+        components: [row],
+      });
+    }
 
     //add commands
     client.on('interactionCreate', async (interaction): Promise<void> => {
