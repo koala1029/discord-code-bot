@@ -62,6 +62,7 @@ client.login(process.env.DISCORD_TOKEN).then(
       //in case user was somehow able to send cmd in the channel without having roles needed
       if (acceptedRoles.length === 0) {
         interaction.editReply({ content: "You don't have any code to claim." });
+        return;
       }
 
       const usersData = await storageHelper.readUsers();
@@ -77,7 +78,7 @@ client.login(process.env.DISCORD_TOKEN).then(
       //loop into roles and add code if needed
       for (const roleId of acceptedRoles) {
         //if we already have a code: add to display and go to next iteration
-        if (usersData[user.id][roleId]) {
+        if (usersData[user.id][roleId].length > 0) {
           codesToDisplay.push(usersData[user.id][roleId]);
           continue;
         }
