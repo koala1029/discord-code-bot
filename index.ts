@@ -24,12 +24,13 @@ client.login(process.env.DISCORD_TOKEN).then(
       throw Error('Cannot send button in the channel given.');
     }
 
-    const button = new ButtonBuilder().setCustomId('codes').setLabel('Get promo codes').setStyle(ButtonStyle.Primary);
+    const button = new ButtonBuilder().setCustomId('codes').setLabel('Claim codes').setStyle(ButtonStyle.Primary);
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
     const lastMessage = (await targetChannel.messages.fetch()).first();
     if (!lastMessage || lastMessage.author.id !== client.user!.id) {
       await targetChannel.send({
-        content: 'Click on the button below to receive your promo codes.',
+        content:
+          'Congratulations! Click the button below to claim your unique redemption code for the Aengel Online Store. ',
         components: [row],
       });
     }
