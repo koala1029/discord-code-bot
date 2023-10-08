@@ -30,7 +30,7 @@ client.login(process.env.DISCORD_TOKEN).then(
     if (!lastMessage || lastMessage.author.id !== client.user!.id) {
       await targetChannel.send({
         content:
-          'Congratulations! Click the button below to claim your unique redemption code for the Aengel Online Store. ',
+          'Congratulations! Click the button below to claim your unique redemption code for the [Aengel Online Store](https://shop.aengelmotorcycles.com).',
         components: [row],
       });
     }
@@ -93,7 +93,7 @@ client.login(process.env.DISCORD_TOKEN).then(
       }
 
       interaction.editReply({
-        content: 'Your codes are: ' + codesToDisplay.toString().replace(',', ', '),
+        content: 'Your codes are:\n' + codesToDisplay.toString().replace(',', ', '),
       });
 
       //write into storage
